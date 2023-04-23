@@ -298,7 +298,9 @@ When combined with the Logistic Regression prediction model we can predict the s
 
 And for live campaigns, we can take the linear relation between **backers** and the current **usd_pledged_real** for an insight on whether the project is heading on a trajectory of a successful campaign or a failed one.
 
-With successful campaigns having more backers that pledge less when compared to failed campaigns having less backers that pledge more money. This is also taken into account even with the total pledged amount for successful campaigns being ~3x that of the failed campaigns.
+With successful campaigns having more backers that pledge less when compared to failed campaigns having less backers that pledge more money. This is also taken into account even with the total pledged amount for successful campaigns being ~3x that of the failed campaigns. 
+
+We can thus conclude that, for a campaign to succeed, it is much preferrable for the campaign to have a large pool of support from backers, rather than a few backers shelling out large individual investments. A successful campaign is one that can reach the awareness of a large audience. 
 
   
 # Consulted References
