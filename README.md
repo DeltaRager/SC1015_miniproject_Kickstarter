@@ -98,24 +98,6 @@ Successful (USD) :  22744.237115292137
 
 We can infer that failed campaigns have a larger goal amount but cannot raise as much where as successful campaigns have a much lower goal amount and are able to raise amounts much higher than their goals.
 
-### Checking the average duration in days for failed and successful campaigns
-Done by Abhinav
-
-```py
-print("Average duration in Days\n")
-print("Failed (Days) : ", failed['duration'].mean())
-print("Successful (Days) : ", successful['duration'].mean())
-```
-**Output:**
-```
-Average duration in Days
-
-Failed (Days) :  34.75573594355426
-Successful (Days) :  31.16973731666266
-```
-
-Not much can be inferred from this. The average campaign seems to last around a month, with failed campaigns lasting a bit longer than the successful ones.
-
 ### Average goal per category by year
 Done by Abhinav
 
@@ -145,41 +127,6 @@ plt.xticks(rotation=45)
 plt.title('Main Category vs usd_pledge_real \n', fontsize=30)
 ```
 ![download](https://user-images.githubusercontent.com/26520694/233837962-d480f50f-fa02-4ca1-b95a-eaf3a92f3b0f.png)
-
-
-
-## The number of successful and failed campaigns per category
-Done by Abhinav
-
-### Successful Campaigns
-```py
-a4_dims = (23.4, 16.5)
-fig, ax = plt.subplots(figsize=a4_dims)
-
-sb.barplot(x=successful.category.value_counts().index,
-                  y=successful.category.value_counts().values, ax=ax)
-
-plt.xticks(rotation=90)
-plt.tight_layout()
-plt.title('Number of successful campaigns per category', fontsize=60)
-plt.show()
-```
-![download](https://user-images.githubusercontent.com/26520694/233824433-fbc9f5c1-4ae4-49ee-92ad-1bf56341b554.png)
-
-### Failed Campaigns
-```py
-a4_dims = (23.4, 16.5)
-fig, ax = plt.subplots(figsize=a4_dims)
-
-sb.barplot(x=failed.category.value_counts().index,
-                  y=failed.category.value_counts().values, ax=ax)
-
-plt.xticks(rotation=90)
-plt.tight_layout()
-plt.title('Number of failed campaigns per category', fontsize=60)
-plt.show()
-```
-![download](https://user-images.githubusercontent.com/26520694/233824447-dc0f4aaa-e003-41df-a5e9-e9da2d05d03b.png)
 
 
 
@@ -353,71 +300,8 @@ And for live campaigns, we can take the linear relation between **backers** and 
 
 With successful campaigns having more backers that pledge less when compared to failed campaigns having less backers that pledge more money. This is also taken into account even with the total pledged amount for successful campaigns being ~3x that of the failed campaigns.
 
-
-# Bias to note
-
-There are Biases in this dataset which have to be take into account while looking at the predictions. The main one being the country of origin for these campaigns being primarily the United States.
-
-```py
-sb.histplot(data = clean_data['country'])
-plt.xlabel('X-Axis Label' ,fontsize=2)
-plt.title('Campaign Country of Origin', fontsize=30)
-plt.xticks(rotation=45)
-```
-
-**Output:**
-```
-([0,
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11,
-  12,
-  13,
-  14,
-  15,
-  16,
-  17,
-  18,
-  19,
-  20,
-  21,
-  22],
- [Text(0, 0, 'GB'),
-  Text(1, 0, 'US'),
-  Text(2, 0, 'CA'),
-  Text(3, 0, 'AU'),
-  Text(4, 0, 'NO'),
-  Text(5, 0, 'IT'),
-  Text(6, 0, 'DE'),
-  Text(7, 0, 'IE'),
-  Text(8, 0, 'MX'),
-  Text(9, 0, 'ES'),
-  Text(10, 0, 'SE'),
-  Text(11, 0, 'FR'),
-  Text(12, 0, 'NL'),
-  Text(13, 0, 'NZ'),
-  Text(14, 0, 'CH'),
-  Text(15, 0, 'AT'),
-  Text(16, 0, 'DK'),
-  Text(17, 0, 'BE'),
-  Text(18, 0, 'HK'),
-  Text(19, 0, 'LU'),
-  Text(20, 0, 'N,0"'),
-  Text(21, 0, 'SG'),
-  Text(22, 0, 'JP')])
-  ```
-  ![download](https://user-images.githubusercontent.com/26520694/233841284-8811fecf-a6c8-406e-90c6-36e0623a92bb.png)
   
-  
-  # Consulted References
+# Consulted References
   
   1. https://www.kaggle.com/datasets/kemical/kickstarter-projects?select=ks-projects-201801.csv [dataset]
   2. https://seaborn.pydata.org/
