@@ -1,5 +1,7 @@
 # SC1015_miniproject_Kickstarter
 
+[Video presentation on YouTube](https://youtu.be/mgRbBjRoPTo)
+
 ## Team 3
 
 ### Group Members
