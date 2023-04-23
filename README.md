@@ -1,5 +1,9 @@
 # SC1015_miniproject_Kickstarter
 
+## Group Members
+- Abhinav [U2223031L]
+- Lucas Ng [U2220046K]
+
 # Importing Libraries
 ```py
 import numpy as np
@@ -20,6 +24,7 @@ data = pd.read_csv('ks-projects-201801.csv')
 
 
 # Cleaning the Dataset
+Done by Abhinav and Lucas
 ```py
 data.dropna(subset = ['name'], inplace=True)
 clean_data = data.copy()
@@ -40,6 +45,7 @@ sb.catplot(y = "state", data = clean_data, kind = "count")
 
 
 # Creation of new variables for EDA
+Done by Abhinav
 ```py
 clean_launched = pd.to_datetime(clean_data['launched'])
 clean_deadline = pd.to_datetime(clean_data['deadline'])
@@ -64,6 +70,8 @@ successful = clean_data[clean_data.state == 'successful']
 # Basic EDA
 
 ### Checking the average goal amount and average pledged amount for failed and successful campaigns
+Done by Abhinav
+
 ```py
 print("Average goal amount in USD\n")
 print("Failed (USD) : ", failed['usd_goal_real'].mean())
@@ -89,6 +97,7 @@ Successful (USD) :  22744.237115292137
 We can infer that failed campaigns have a larger goal amount but cannot raise as much where as successful campaigns have a much lower goal amount and are able to raise amounts much higher than their goals.
 
 ### Checking the average duration in days for failed and successful campaigns
+Done by Abhinav
 
 ```py
 print("Average duration in Days\n")
@@ -106,6 +115,7 @@ Successful (Days) :  31.16973731666266
 Not much can be inferred from this. The average campaign seems to last around a month, with failed campaigns lasting a bit longer than the successful ones.
 
 ### Average goal per category by year
+Done by Abhinav
 
 ```py
 ax = plt.subplot(111)
@@ -123,7 +133,21 @@ plt.show()
 ```
 ![download](https://user-images.githubusercontent.com/26520694/233824411-72097105-27ea-49fa-831a-860c81b9f777.png)
 
+### Main Category vs Pledged Amount in USD
+Done by Lucas
+
+```py
+sb.barplot(x=clean_data["main_category"], y=clean_data["usd_pledged_real"])
+plt.xlabel('X-Axis Label' ,fontsize=2)
+plt.xticks(rotation=45)
+plt.title('Main Category vs usd_pledge_real \n', fontsize=30)
+```
+![download](https://user-images.githubusercontent.com/26520694/233837962-d480f50f-fa02-4ca1-b95a-eaf3a92f3b0f.png)
+
+
+
 ## The number of successful and failed campaigns per category
+Done by Abhinav
 
 ### Successful Campaigns
 ```py
@@ -158,6 +182,8 @@ plt.show()
 
 
 # Checking the Correlation
+Done by Abhinav
+
 ```py
 cor = pd.DataFrame(clean_data, columns=['backers', 'usd_pledged_real', 'usd_goal_real', 'duration', 'launch_month', 'launch_year', 'name_length', 'pledge_per_backer'])
 fig, ax = plt.subplots(figsize=(10,8))
@@ -174,6 +200,8 @@ plt.show()
 
 
 ## Logistic Regression
+Done by Abhinav
+
 Using our root problem statement, we want to have a good way of measuring the chances of a campaign failing or succeeding with the attributes from our dataset. We can see from the previous correlation heatmap, **backers** and **usd_pledged_real** are heavily correlated. 
 
 We would also like to **usd_goal_real** and **duration** to our list of predictors as it would be intuitive for a first time investor to look at those attributes of a campaign before investing.
@@ -226,6 +254,7 @@ Name: state, dtype: int64
 
 
 ## Linear Regression
+Done by Lucas
 
 Given the strong correlation between the variables **backers** and **usd_pledged_real** and their predictive power, we will employ linear regression to explore the relationship between these variables and identify any patterns.
 
