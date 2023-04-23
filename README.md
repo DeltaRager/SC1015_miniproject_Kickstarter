@@ -12,6 +12,8 @@
 
 Kickstarter campaigns are investments and pose a risk to the investor, similar to stocks in the stock market. The project focuses on measuring the chances of a campaign failing or succeeding with the attributes from our dataset.
 
+Note: To use the dataset, please extract the .rar file with winrar or any other appropriate software.
+
 **Index:**
 1. [Problem Definition](https://github.com/DeltaRager/SC1015_miniproject_Kickstarter/edit/main/README.md#problem-definition)
 2. [Models Used](https://github.com/DeltaRager/SC1015_miniproject_Kickstarter/edit/main/README.md#models-used)
