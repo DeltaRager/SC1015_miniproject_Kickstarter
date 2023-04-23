@@ -169,3 +169,148 @@ plt.show()
 ![download](https://user-images.githubusercontent.com/26520694/233824481-b4a1b2ef-1980-46c3-97ad-efb77c3c1ce2.png)
 
 
+
+# Predictions
+
+
+## Logistic Regression
+Using our root problem statement, we want to have a good way of measuring the chances of a campaign failing or succeeding with the attributes from our dataset. We can see from the previous correlation heatmap, **backers** and **usd_pledged_real** are heavily correlated. 
+
+We would also like to **usd_goal_real** and **duration** to our list of predictors as it would be intuitive for a first time investor to look at those attributes of a campaign before investing.
+
+```py
+predictors = pd.DataFrame(clean_data, columns=['usd_goal_real', 'duration', 'backers', 'usd_pledged_real'])
+X_train, X_test, y_train, y_test = train_test_split(predictors, clean_data['state'], test_size=0.2, random_state=3)
+
+model = LogisticRegression()
+
+model.fit(X_train, y_train)
+
+score = model.score(X_test, y_test)
+print('Accuracy:', score)
+```
+
+**Output:**
+```
+Accuracy: 0.9912716348430924
+```
+
+The accuracy is 99.13%, which is very good. Thus, we can conclude that the following predictors are very useful in predicting a campaigns state.
+
+
+We will also plot the confusion matrix to get better insights on its predictions.
+
+```py
+predictions = model.predict(X_test)
+
+cm = metrics.confusion_matrix(y_test, predictions)
+print(y_test.value_counts())
+
+plt.figure(figsize=(9,9))
+sb.heatmap(cm, annot=True, fmt=".3f", linewidths=.5, square = True, cmap = 'Blues_r');
+plt.ylabel('Actual state');
+plt.xlabel('Predicted state');
+all_sample_title = 'Accuracy Score: {0} | failed : 0 | successful : 1'.format(score)
+plt.title(all_sample_title, size = 15);
+```
+
+**Output:**
+```
+failed        47125
+successful    26772
+Name: state, dtype: int64
+```
+![download](https://user-images.githubusercontent.com/26520694/233834140-251976e1-b2c6-40b9-afc7-03f578fda80e.png)
+
+
+
+
+## Linear Regression
+
+Given the strong correlation between the variables **backers** and **usd_pledged_real** and their predictive power, we will employ linear regression to explore the relationship between these variables and identify any patterns.
+
+This could be done as a part of EDA without the use of Linear Regression, but we have found that the Regression model helps us visualize it better.
+
+```py
+fail = failed[failed.backers < 10000]
+succ = successful[successful.backers < 10000]
+```
+
+The above is executed first to standardize the scales and limit the amount of outliers as there are a lot in this dataset,
+
+
+### Failed Campaign Analysis
+
+```py
+from sklearn.linear_model import LinearRegression
+
+y = pd.DataFrame(fail['backers'])
+X = pd.DataFrame(fail['usd_pledged_real'])
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+
+lr.fit(X_train, y_train)
+
+regline_x = X_train
+regline_y = lr.intercept_ + lr.coef_ * X_train
+
+print("Intercept:", lr.intercept_)
+print("Coefficient:", lr.coef_[0])
+
+f, axes = plt.subplots(1, 1, figsize=(16, 8))
+plt.scatter(X_train, y_train)
+plt.plot(regline_x, regline_y, 'r-', linewidth = 3)
+plt.title('Failed Campaigns: backers vs usd_pledged_real', fontsize=20)
+plt.ylim(top=10000)
+plt.show()
+```
+
+**Output:**
+```
+Intercept: [6.12934067]
+Coefficient: [0.00809498]
+```
+![download](https://user-images.githubusercontent.com/26520694/233835027-52dba815-021b-4849-aac3-1e58dbf2c9a7.png)
+
+
+
+### Successful Campaign Analysis
+
+```py
+y = pd.DataFrame(succ['backers'])
+X = pd.DataFrame(succ['usd_pledged_real'])
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+
+lr.fit(X_train, y_train)
+
+regline_x = X_train
+regline_y = lr.intercept_ + lr.coef_ * X_train
+
+print("Intercept:", lr.intercept_)
+print("Coefficient:", lr.coef_[0])
+
+f, axes = plt.subplots(1, 1, figsize=(16, 8))
+plt.scatter(X_train, y_train)
+plt.plot(regline_x, regline_y, 'r-', linewidth = 3)
+plt.ylim(top=10000)
+plt.show()
+```
+
+**Output:**
+```
+Intercept: [114.29508982]
+Coefficient: [0.00563004]
+```
+![download](https://user-images.githubusercontent.com/26520694/233835046-31997f3e-9e02-4e84-84bf-a4c75eb27cf6.png)
+
+
+We noticed how the failed campaigns had a much lower slope than the successful campaigns, indicating that there were **less backers per pledged dollar** for failed campaigns as compared to a **higher backers per pledged dollar** for successful campaigns.
+
+Hence, when combined with the Logistic Regression prediction model we can predict the state of a campaign using the following predictors:
+- usd_goal_real
+- duration
+- backers
+- usd_pledged_real
+
+And for live campaigns, we can take the ratio between **backers** and the current **usd_pledged_real** for a visual on whether the project is heading on a trajectory of a successful campaign or a failed one.
