@@ -336,10 +336,88 @@ Coefficient: [0.00563004]
 
 We noticed how the failed campaigns had a much lower slope than the successful campaigns, indicating that there were **less backers per pledged dollar** for failed campaigns as compared to a **higher backers per pledged dollar** for successful campaigns.
 
-Hence, when combined with the Logistic Regression prediction model we can predict the state of a campaign using the following predictors:
+
+# Insight and Conclusion
+
+Based on our analysis, the problem is a classification task. This involves using the selected predictors to predict which state a campaign is likely to head towards.
+
+When combined with the Logistic Regression prediction model we can predict the state of a campaign using the following predictors:
 - usd_goal_real
 - duration
 - backers
 - usd_pledged_real
 
-And for live campaigns, we can take the ratio between **backers** and the current **usd_pledged_real** for a visual on whether the project is heading on a trajectory of a successful campaign or a failed one.
+And for live campaigns, we can take the linear relation between **backers** and the current **usd_pledged_real** for an insight on whether the project is heading on a trajectory of a successful campaign or a failed one.
+
+With successful campaigns having more backers that pledge less when compared to failed campaigns having less backers that pledge more money. This is also taken into account even with the total pledged amount for successful campaigns being ~3x that of the failed campaigns.
+
+
+# Bias to note
+
+There are Biases in this dataset which have to be take into account while looking at the predictions. The main one being the country of origin for these campaigns being primarily the United States.
+
+```py
+sb.histplot(data = clean_data['country'])
+plt.xlabel('X-Axis Label' ,fontsize=2)
+plt.title('Campaign Country of Origin', fontsize=30)
+plt.xticks(rotation=45)
+```
+
+**Output:**
+```
+([0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22],
+ [Text(0, 0, 'GB'),
+  Text(1, 0, 'US'),
+  Text(2, 0, 'CA'),
+  Text(3, 0, 'AU'),
+  Text(4, 0, 'NO'),
+  Text(5, 0, 'IT'),
+  Text(6, 0, 'DE'),
+  Text(7, 0, 'IE'),
+  Text(8, 0, 'MX'),
+  Text(9, 0, 'ES'),
+  Text(10, 0, 'SE'),
+  Text(11, 0, 'FR'),
+  Text(12, 0, 'NL'),
+  Text(13, 0, 'NZ'),
+  Text(14, 0, 'CH'),
+  Text(15, 0, 'AT'),
+  Text(16, 0, 'DK'),
+  Text(17, 0, 'BE'),
+  Text(18, 0, 'HK'),
+  Text(19, 0, 'LU'),
+  Text(20, 0, 'N,0"'),
+  Text(21, 0, 'SG'),
+  Text(22, 0, 'JP')])
+  ```
+  ![download](https://user-images.githubusercontent.com/26520694/233841284-8811fecf-a6c8-406e-90c6-36e0623a92bb.png)
+  
+  
+  # Consulted References
+  
+  1. https://www.kaggle.com/datasets/kemical/kickstarter-projects?select=ks-projects-201801.csv [dataset]
+  2. https://seaborn.pydata.org/
+  3. https://towardsdatascience.com/logistic-regression-using-python-sklearn-numpy-mnist-handwriting-recognition-matplotlib-a6b31e2b166a
+  4. https://scikit-learn.org/stable/
