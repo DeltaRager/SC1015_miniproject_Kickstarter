@@ -1,6 +1,8 @@
 # SC1015_miniproject_Kickstarter
 
-## Group Members
+## Team 3
+
+### Group Members
 - Abhinav [U2223031L]
 - Lucas Ng [U2220046K]
 
